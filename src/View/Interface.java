@@ -14,21 +14,20 @@ import java.util.LinkedList;
  * @author 4NDR35
  */
 public class Interface extends javax.swing.JPanel {
-    LinkedList<Point> point = new LinkedList<>();
-    
+
+    private LinkedList<Point> point = new LinkedList<>();
 
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
-        
-        
+
     }
 
     public void SetPoint(Point p) {
-        
-        point.add(p);
+
+        getPoint().add(p);
         this.paintComponent(this.getGraphics());
 
     }
@@ -36,13 +35,26 @@ public class Interface extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(!point.isEmpty()){
-        for (Point point1 : point) {
-            point1.draw(g);
-            this.repaint();
+        if (!point.isEmpty()) {
+//        for (Point point1 : getPoint()) {
+//            point1.draw(g);
+//            g.drawLine(this.getX()+this.getWidth(), this.getY()+point1.getCoordy(), this.getX(),this.getY()+point1.getCoordy());
+//        }
+            point.get(0).draw(g);
+            g.drawLine(this.getX() + this.getWidth(), this.getY() + point.get(0).getCoordy(), this.getX(), this.getY() + point.get(0).getCoordy());
+            for (int i = 1; i < point.size(); i++) {
+
+                if (point.get(i).getCut() == 1) {
+                    point.get(i).draw(g);
+                    g.drawLine(this.getX() + point.get(i).getCoordx(), this.getY() + this.getHeight(), this.getX() + point.get(i).getCoordx(), this.getY() + point.get(i - 1).getCoordy());
+                }
+                if (point.get(i).getCut() == 0) {
+                    point.get(i).draw(g);
+                    g.drawLine(this.getX(), point.get(i).getCoordy(), this.getX() + point.get(i - 1).getCoordx(), this.getY() + point.get(i).getCoordy());
+                }
+            }
         }
-        }
-        
+
     }
 
     /**
@@ -69,4 +81,21 @@ public class Interface extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    /**
+     * @return the point
+     */
+    public LinkedList<Point> getPoint() {
+        return point;
+    }
+
+    /**
+     * @param point the point to set
+     */
+    public void setPoint(LinkedList<Point> point) {
+        this.point = point;
+    }
+
+    /**
+     * @return the Horizontal
+     */
 }

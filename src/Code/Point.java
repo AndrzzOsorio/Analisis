@@ -10,15 +10,17 @@ public class Point {
     
     private int coordx;
     private int coordy;
-    private Circle area;
+    private int cut;
+    
 
     public Point() {
     }
 
-    public Point(int coordx, int coordy) {
+    public Point(int coordx, int coordy, int cut) {
         this.coordx = coordx;
         this.coordy = coordy;
-        this.area = new Circle(2);
+        this.cut = cut;
+        
     }
     
     public void draw (Graphics g){
@@ -57,17 +59,22 @@ public class Point {
     }
 
     /**
-     * @return the area
+     * @return the cut
      */
-    public Circle getArea() {
-        return area;
+    public int getCut() {
+        return cut;
     }
 
     /**
-     * @param area the area to set
+     * @param cut the cut to set
      */
-    public void setArea(Circle area) {
-        this.area = area;
+    public void setCut(int cut) {
+        this.cut = cut;
     }
+
+    /**
+     * @return the area
+     */
+    
     
 }

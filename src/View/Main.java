@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package View;
+
 import Code.*;
 import java.awt.Panel;
 
@@ -12,15 +13,15 @@ import java.awt.Panel;
  * @author 4NDR35
  */
 public class Main extends javax.swing.JFrame {
-Point p;
-Interface panel;
-    
+
+    Point p;
+    Interface panel;
+
     public Main() {
         initComponents();
-        this.setBounds(500,300,300,300);
+        this.setBounds(500, 300, 300, 300);
         this.setVisible(true);
 
-        
     }
 
     /**
@@ -68,9 +69,21 @@ Interface panel;
     }// </editor-fold>//GEN-END:initComponents
 
     private void interface1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_interface1MouseClicked
-        p = new Point(evt.getX(), evt.getY());
-        interface1.SetPoint(p);
-        this.repaint();
+        if (interface1.getPoint().isEmpty()) {
+            p = new Point(evt.getX(), evt.getY(), 0);
+            interface1.SetPoint(p);
+            this.repaint();
+        } else {
+            if (interface1.getPoint().getLast().getCut() == 0) {
+                p = new Point(evt.getX(), evt.getY(), 1);
+                interface1.SetPoint(p);
+                this.repaint();
+            } else if (interface1.getPoint().getLast().getCut() == 1) {
+                p = new Point(evt.getX(), evt.getY(), 0);
+                interface1.SetPoint(p);
+                this.repaint();
+            }
+        }
     }//GEN-LAST:event_interface1MouseClicked
 
     /**
