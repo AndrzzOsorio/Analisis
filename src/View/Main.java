@@ -7,6 +7,7 @@ package View;
 
 import Code.*;
 import java.awt.Panel;
+import java.util.LinkedList;
 
 /**
  *
@@ -14,13 +15,17 @@ import java.awt.Panel;
  */
 public class Main extends javax.swing.JFrame {
 
-    Point p;
-    Interface panel;
+    
+    LinkedList<Point> points;
+    Control c;
 
     public Main() {
         initComponents();
         this.setBounds(500, 300, 300, 300);
         this.setVisible(true);
+        points = new LinkedList<>();
+        Tree t;
+        c =new Control();
 
     }
 
@@ -34,6 +39,7 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         interface1 = new View.Interface();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,15 +49,26 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(51, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Divir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout interface1Layout = new javax.swing.GroupLayout(interface1);
         interface1.setLayout(interface1Layout);
         interface1Layout.setHorizontalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         interface1Layout.setVerticalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
+                .addGap(0, 277, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -69,22 +86,17 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void interface1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_interface1MouseClicked
-        if (interface1.getPoint().isEmpty()) {
-            p = new Point(evt.getX(), evt.getY(), 0);
-            interface1.SetPoint(p);
-            this.repaint();
-        } else {
-            if (interface1.getPoint().getLast().getCut() == 0) {
-                p = new Point(evt.getX(), evt.getY(), 1);
-                interface1.SetPoint(p);
-                this.repaint();
-            } else if (interface1.getPoint().getLast().getCut() == 1) {
-                p = new Point(evt.getX(), evt.getY(), 0);
-                interface1.SetPoint(p);
-                this.repaint();
-            }
-        }
+        points.add(new Point(evt.getX(), evt.getY()));
+        interface1.SetPoints(points);
+        this.repaint();
     }//GEN-LAST:event_interface1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        c.standar(points, this.getWidth(), this.getHeight());
+        interface1.SetControl(c);
+        this.repaint();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,5 +135,6 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.Interface interface1;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

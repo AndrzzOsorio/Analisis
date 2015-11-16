@@ -3,78 +3,59 @@ package Code;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import javafx.scene.shape.Circle;
+
 
 
 public class Point {
     
-    private int coordx;
-    private int coordy;
-    private int cut;
-    
+    private double coordx;
+    private double coordy;
 
     public Point() {
     }
 
-    public Point(int coordx, int coordy, int cut) {
+    public Point(double coordx, double coordy) {
         this.coordx = coordx;
         this.coordy = coordy;
-        this.cut = cut;
-        
-    }
-    
-    public void draw (Graphics g){
-        
-        g.drawOval(getCoordx()-3, getCoordy()-3, 6, 6);
-        g.fillOval(getCoordx()-3, getCoordy()-3, 6, 6);
-        g.setColor(Color.black);
     }
 
     /**
      * @return the coordx
      */
-    public int getCoordx() {
+    public double getCoordx() {
         return coordx;
     }
 
     /**
      * @param coordx the coordx to set
      */
-    public void setCoordx(int coordx) {
+    public void setCoordx(double coordx) {
         this.coordx = coordx;
     }
 
     /**
      * @return the coordy
      */
-    public int getCoordy() {
+    public double getCoordy() {
         return coordy;
     }
 
     /**
      * @param coordy the coordy to set
      */
-    public void setCoordy(int coordy) {
+    public void setCoordy(double coordy) {
         this.coordy = coordy;
     }
 
-    /**
-     * @return the cut
-     */
-    public int getCut() {
-        return cut;
-    }
-
-    /**
-     * @param cut the cut to set
-     */
-    public void setCut(int cut) {
-        this.cut = cut;
-    }
-
-    /**
-     * @return the area
-     */
     
     
-}
+    public void Draw (Graphics g){
+        g.drawOval((int)coordx-3, (int)coordy-3, 6, 6);
+        g.fillOval((int)coordx-3, (int)coordy-3, 6, 6);
+        g.setColor(Color.black);
+    }
+    }
+    
+    
+    
+

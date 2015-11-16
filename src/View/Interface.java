@@ -16,46 +16,40 @@ import java.util.LinkedList;
 public class Interface extends javax.swing.JPanel {
 
     private LinkedList<Point> point = new LinkedList<>();
+    Control c;
 
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
+        
 
     }
 
-    public void SetPoint(Point p) {
+    public void SetControl(Control c) {
 
-        getPoint().add(p);
+        this.c = c;
         this.paintComponent(this.getGraphics());
-
+    }
+    
+    public  void SetPoints (LinkedList<Point> p){
+        this.point = p;
+        this.paintComponent(this.getGraphics());
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (!point.isEmpty()) {
-//        for (Point point1 : getPoint()) {
-//            point1.draw(g);
-//            g.drawLine(this.getX()+this.getWidth(), this.getY()+point1.getCoordy(), this.getX(),this.getY()+point1.getCoordy());
-//        }
-            point.get(0).draw(g);
-            g.drawLine(this.getX() + this.getWidth(), this.getY() + point.get(0).getCoordy(), this.getX(), this.getY() + point.get(0).getCoordy());
-            for (int i = 1; i < point.size(); i++) {
-
-                if (point.get(i).getCut() == 1) {
-                    point.get(i).draw(g);
-                    g.drawLine(this.getX() + point.get(i).getCoordx(), this.getY() + this.getHeight(), this.getX() + point.get(i).getCoordx(), this.getY() + point.get(i - 1).getCoordy());
-                }
-                if (point.get(i).getCut() == 0) {
-                    point.get(i).draw(g);
-                    g.drawLine(this.getX(), point.get(i).getCoordy(), this.getX() + point.get(i - 1).getCoordx(), this.getY() + point.get(i).getCoordy());
-                }
+        if(!(point.isEmpty())){
+            for (Point point1 : point) {
+                point1.Draw(g);
             }
         }
-
-    }
+        if(c != null && c.getT().getRoot() != null){
+        c.Lines(g, c.getT().getRoot());
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
