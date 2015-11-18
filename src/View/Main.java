@@ -7,6 +7,7 @@ package View;
 
 import Code.*;
 import java.awt.Panel;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 
 /**
@@ -18,14 +19,16 @@ public class Main extends javax.swing.JFrame {
     
     LinkedList<Point> points;
     Control c;
+    LinkedList<Rectangle> recs;
 
     public Main() {
         initComponents();
-        this.setBounds(500, 300, 300, 300);
+        
         this.setVisible(true);
         points = new LinkedList<>();
         Tree t;
         c =new Control();
+        recs = new LinkedList<>();
 
     }
 
@@ -40,6 +43,7 @@ public class Main extends javax.swing.JFrame {
 
         interface1 = new View.Interface();
         jButton1 = new javax.swing.JButton();
+        btncolors = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,10 +55,19 @@ public class Main extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(51, 0, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Divir");
+        jButton1.setText("Divide");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btncolors.setBackground(new java.awt.Color(51, 0, 0));
+        btncolors.setForeground(new java.awt.Color(255, 255, 255));
+        btncolors.setText("Colors");
+        btncolors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncolorsActionPerformed(evt);
             }
         });
 
@@ -62,13 +75,19 @@ public class Main extends javax.swing.JFrame {
         interface1.setLayout(interface1Layout);
         interface1Layout.setHorizontalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         interface1Layout.setVerticalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
-                .addGap(0, 277, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addContainerGap(280, Short.MAX_VALUE)
+                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -97,6 +116,12 @@ public class Main extends javax.swing.JFrame {
         this.repaint();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btncolorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncolorsActionPerformed
+        recs = c.getRectangles();
+        interface1.SetColors(recs);
+        this.repaint();
+    }//GEN-LAST:event_btncolorsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,6 +159,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btncolors;
     private View.Interface interface1;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables

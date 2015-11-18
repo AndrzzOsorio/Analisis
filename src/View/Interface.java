@@ -7,6 +7,7 @@ package View;
 
 import Code.*;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 
 /**
@@ -16,6 +17,7 @@ import java.util.LinkedList;
 public class Interface extends javax.swing.JPanel {
 
     private LinkedList<Point> point = new LinkedList<>();
+    private LinkedList<Rectangle> recs = new LinkedList<>();
     Control c;
 
     /**
@@ -37,6 +39,10 @@ public class Interface extends javax.swing.JPanel {
         this.point = p;
         this.paintComponent(this.getGraphics());
     }
+    public void SetColors(LinkedList<Rectangle> recs){
+        this.recs = recs;
+        this.paint(this.getGraphics());
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -48,6 +54,13 @@ public class Interface extends javax.swing.JPanel {
         }
         if(c != null && c.getT().getRoot() != null){
         c.Lines(g, c.getT().getRoot());
+        }
+        if (!recs.isEmpty()){
+            for (Rectangle rectangle : recs) {
+                g.drawRect((int)rectangle.getX(), (int)rectangle.getY(), (int)rectangle.getWidth(), (int)rectangle.getHeight());
+                g.fillRect((int)rectangle.getX(), (int)rectangle.getY(), (int)rectangle.getWidth(), (int)rectangle.getHeight());
+                g.setColor(c.getColors().get(3));
+            }
         }
      }
 
