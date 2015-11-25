@@ -51,8 +51,8 @@ public class Point {
     
     public void Draw (Graphics g){
         g.drawOval((int)coordx-3, (int)coordy-3, 6, 6);
-        g.fillOval((int)coordx-3, (int)coordy-3, 6, 6);
         g.setColor(Color.black);
+        g.fillOval((int)coordx-3, (int)coordy-3, 6, 6);
     }
     }
     

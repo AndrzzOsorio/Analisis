@@ -5,6 +5,7 @@
  */
 package Code;
 
+import Tree.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -17,17 +18,14 @@ import java.util.LinkedList;
 public class Control {
 
     private Tree<Data> t;
-    private LinkedList<Rectangle> rectangles;
-    private LinkedList<Color> colors;
+    private LinkedList<Area> rectangles;
+    private LinkedList<Color> colorsls;
 
     public Control() {
         t = new Tree<>(new Node<Data>());
         rectangles = new LinkedList<>();
-        colors = new LinkedList<>();
-        colors.add(Color.red);
-        colors.add(Color.black);
-        colors.add(Color.blue);
-        colors.add(Color.green);
+        colorsls = new LinkedList<>();
+
     }
 
     /**
@@ -49,82 +47,76 @@ public class Control {
     }
 
     public void buildtree(Node<Data> root, LinkedList<Point> p, double x, double y, int w, int h, int orientation) {
-        if(p.size()>1){
-        double minor = 999999;
-        double temp;
-        int index = -1;
-        LinkedList<Point> pts;
-        
-        if (orientation == 1) {
-            pts = organiceY(p);
-        } else {
-            pts = organiceX(p);
-        }
-        Point temporalpoint = p.getFirst();
-        if (root != null) {
-            for (int i = 0; i < pts.size(); i++) {
-                temp = hypotenusecompare(pts.get(i), new Point(x + (w / 2), y + (h / 2)));
-                if (minor > temp) {
-                    minor = temp;
-                    temporalpoint = pts.get(i);
-                    index = i;
-                }
-            }
-            if (orientation == 1) {
-                LinkedList<Point> uperPoints = extract(pts, 0, index);
-                LinkedList<Point> lowerPoints = extract(pts, index + 1, pts.size());
-                Data nData = new Data(new Line(new Point(x, temporalpoint.getCoordy()), new Point(w, temporalpoint.getCoordy())), temporalpoint);
-                root.setElement(nData);
-                if (uperPoints.size() >= 1) {
-                    root.setLeft(new Node<Data>());
-                    buildtree(root.getLeft(), uperPoints, x, y, w, (int) temporalpoint.getCoordy(), (orientation * (-1)));
-                }
-                else{
-                   rectangles.add(new Rectangle((int) x, (int) y, (int) temporalpoint.getCoordx() - (int) x, h - (int) y));
-                }
-                if (lowerPoints.size() >= 1) {
-                    root.setRigth(new Node<Data>());
-                    buildtree(root.getRigth(), lowerPoints, x, (int) temporalpoint.getCoordy(), w, h, (orientation * (-1)));
-                }
-                else{
-                    rectangles.add(new Rectangle((int) x, (int) y, (int) temporalpoint.getCoordx() - (int) x, h - (int) y));
-                }
-            } else {
-                LinkedList<Point> leftPoints = extract(pts, 0, index);
-                LinkedList<Point> rightPoints = extract(pts, index + 1, pts.size());
-                Data nData = new Data(new Line(new Point(temporalpoint.getCoordx(), y), new Point(temporalpoint.getCoordx(), h)), temporalpoint);
-                root.setElement(nData);
-                if (leftPoints.size() >= 1) {
-                    root.setLeft(new Node<Data>());
-                    buildtree(root.getLeft(), leftPoints, x, y, (int) temporalpoint.getCoordx(), h, (orientation * (-1)));
-                }
-                else{
-                    rectangles.add(new Rectangle((int)x, (int)y, w, h));
-                }
-                if (rightPoints.size() >= 1) {
-                    root.setRigth(new Node<Data>());
-                    buildtree(root.getRigth(), rightPoints, (int) temporalpoint.getCoordx(), y, w, h, (orientation * (-1)));
-                }
-                else{
-                    rectangles.add(new Rectangle((int) x, (int) y,  w-(int)x, (int)temporalpoint.getCoordy()-(int)y));
-                }
-            }
+        if (p.size() > 1) {
+            double minor = 999999;
+            double temp;
+            int index = -1;
+            LinkedList<Point> pts;
 
-        }
-        }
-        else if(p.size()==1){
-             if (orientation == 1) {
-                
+            if (orientation == 1) {
+                pts = organiceY(p);
+            } else {
+                pts = organiceX(p);
+            }
+            Point temporalpoint = p.getFirst();
+            if (root != null) {
+                for (int i = 0; i < pts.size(); i++) {
+                    temp = hypotenusecompare(pts.get(i), new Point(x + (w / 2), y + (h / 2)));
+                    if (minor > temp) {
+                        minor = temp;
+                        temporalpoint = pts.get(i);
+                        index = i;
+                    }
+                }
+                if (orientation == 1) {
+                    LinkedList<Point> uperPoints = extract(pts, 0, index);
+                    LinkedList<Point> lowerPoints = extract(pts, index + 1, pts.size());
+                    Data nData = new Data(new Line(new Point(x, temporalpoint.getCoordy()), new Point(w, temporalpoint.getCoordy())), temporalpoint);
+                    root.setElement(nData);
+                    if (uperPoints.size() >= 1) {
+                        root.setLeft(new Node<Data>());
+                        buildtree(root.getLeft(), uperPoints, x, y, w, (int) temporalpoint.getCoordy(), (orientation * (-1)));
+                    } else {
+                        rectangles.add(new Area((int) x, (int) y, w - (int) x, (int) temporalpoint.getCoordy() - (int) y));
+                    }
+                    if (lowerPoints.size() >= 1) {
+                        root.setRigth(new Node<Data>());
+                        buildtree(root.getRigth(), lowerPoints, x, (int) temporalpoint.getCoordy(), w, h, (orientation * (-1)));
+                    } else {
+                        rectangles.add(new Area((int) x, (int) temporalpoint.getCoordy(), w - (int) x, h - (int) temporalpoint.getCoordy()));
+                    }
+                } else {
+                    LinkedList<Point> leftPoints = extract(pts, 0, index);
+                    LinkedList<Point> rightPoints = extract(pts, index + 1, pts.size());
+                    Data nData = new Data(new Line(new Point(temporalpoint.getCoordx(), y), new Point(temporalpoint.getCoordx(), h)), temporalpoint);
+                    root.setElement(nData);
+                    if (leftPoints.size() >= 1) {
+                        root.setLeft(new Node<Data>());
+                        buildtree(root.getLeft(), leftPoints, x, y, (int) temporalpoint.getCoordx(), h, (orientation * (-1)));
+                    } else {
+                        rectangles.add(new Area((int) x, (int) y, (int) temporalpoint.getCoordx() - (int) x, h - (int) y));
+                    }
+                    if (rightPoints.size() >= 1) {
+                        root.setRigth(new Node<Data>());
+                        buildtree(root.getRigth(), rightPoints, (int) temporalpoint.getCoordx(), y, w, h, (orientation * (-1)));
+                    } else {
+                        rectangles.add(new Area((int) temporalpoint.getCoordx(), (int) y, w - (int) temporalpoint.getCoordx(), h - (int) y));
+                    }
+                }
+
+            }
+        } else if (p.size() == 1) {
+            if (orientation == 1) {
+
                 Data nData = new Data(new Line(new Point(x, p.getFirst().getCoordy()), new Point(w, p.getFirst().getCoordy())), p.getFirst());
                 root.setElement(nData);
-                Createsquaresx(p.getFirst(), x, y, w, h);
-                
-             }
-             else if(orientation == -1){
-                 Data nData = new Data(new Line(new Point(p.getFirst().getCoordx(), y), new Point(p.getFirst().getCoordx(), h)), p.getFirst());
-                root.setElement(nData);
                 Createsquaresy(p.getFirst(), x, y, w, h);
-             }
+
+            } else if (orientation == -1) {
+                Data nData = new Data(new Line(new Point(p.getFirst().getCoordx(), y), new Point(p.getFirst().getCoordx(), h)), p.getFirst());
+                root.setElement(nData);
+                Createsquaresx(p.getFirst(), x, y, w, h);
+            }
         }
     }
 
@@ -142,7 +134,7 @@ public class Control {
                     mirror.set(j, mirror.get(k));
                     mirror.set(k, aux);
                 }
-           }
+            }
         }
         return mirror;
     }
@@ -185,53 +177,130 @@ public class Control {
     }
 
     public void Createsquaresx(Point p, double x, double y, int w, int h) {
-        Rectangle rec1 = new Rectangle((int) x, (int) y, (int) p.getCoordx() - (int) x, h - (int) y);
-        Rectangle rec2 = new Rectangle((int) p.getCoordx(), (int) y, w - (int) p.getCoordx(), h - (int) y);
-        if (!rectangles.contains(rec1)){
-            getRectangles().add(rec1);
+        Area rec1 = new Area((int) x, (int) y, (int) p.getCoordx() - (int) x, h - (int) y);
+        Area rec2 = new Area((int) p.getCoordx(), (int) y, w - (int) p.getCoordx(), h - (int) y);
+        if (!rectangles.contains(rec1)) {
+            rectangles.add(rec1);
         }
-        if (!rectangles.contains(rec2)){
-            getRectangles().add(rec2);
+        if (!rectangles.contains(rec2)) {
+            rectangles.add(rec2);
         }
     }
 
     public void Createsquaresy(Point p, double x, double y, int w, int h) {
-        Rectangle rec1 = new Rectangle((int) x, (int) y,  w-(int)x, (int)p.getCoordy()-(int)y);
-        Rectangle rec2 = new Rectangle((int) x, (int) p.getCoordy(), w - (int)x, h - (int) p.getCoordy());
-        if (!rectangles.contains(rec1)){
-            getRectangles().add(rec1);
+        Area rec1 = new Area((int) x, (int) y, w - (int) x, (int) p.getCoordy() - (int) y);
+        Area rec2 = new Area((int) x, (int) p.getCoordy(), w - (int) x, h - (int) p.getCoordy());
+        if (!rectangles.contains(rec1)) {
+            rectangles.add(rec1);
         }
-        if (!rectangles.contains(rec2)){
-            getRectangles().add(rec2);
+        if (!rectangles.contains(rec2)) {
+            rectangles.add(rec2);
         }
+    }
+
+    public void Newcolor() {
+        Color randomColor2 = new Color((int) (Math.random() * 254),(int) (Math.random() * 254),(int) (Math.random() * 254));
+        colorsls.add(randomColor2);
+
+    }
+
+    public LinkedList<Area> Colors() {
+
+        LinkedList<Area> temporal = new LinkedList<>();
+        for (int i = 0; i < rectangles.size(); i++) {
+            temporal.add((Area) (rectangles.get(i).clone()));
+        }
+        for (int i = 0; i < temporal.size(); i++) {
+            temporal.get(i).getArea().setBounds((int) temporal.get(i).getArea().getX() - 1, (int) temporal.get(i).getArea().getY() - 1, (int) temporal.get(i).getArea().getWidth() + 2, (int) temporal.get(i).getArea().getHeight() + 2);
+
+        }
+        for (int i = 0; i < temporal.size(); i++) {
+                    paintAreas(temporal, i);
+        }        return temporal;
+    }
+
+    public void paintAreas(LinkedList<Area> areas, int x) {
+        Area a = areas.get(x);
+        if (a.getColor() == null) {
+            this.Newcolor();
+            a.setColor(this.colorsls.getFirst());
+        }
+        Color aux = null;
+        
+        for (int i = 0; i < areas.size(); i++) {
+            boolean analice = true;
+            if (areas.get(i) != a) {
+                if (a.getArea().intersects(areas.get(i).getArea()) /*&& areas.get(i).getColor() == null*/) {
+                    for (Color color : this.colorsls) {
+                        if (analice && colorselection(a, areas.get(i), color, areas)) {
+                            aux = color;
+                            analice = false;
+                        }
+                    }
+                    if (aux == null) {
+                        this.Newcolor();
+                        aux = this.colorsls.getLast();
+                    }
+                    areas.get(i).setColor(aux);
+                }
+            }
+
+        }
+
+    }
+
+    public boolean colorselection(Area a, Area a1, Color c, LinkedList<Area> areas) {
+        boolean b = false;
+        if (a.getColor() != c) {
+            for (int i = 0; i < areas.size(); i++) {
+                if (a != areas.get(i) && a1 != areas.get(i)) {
+                    if (a.getArea().intersects(areas.get(i).getArea()) && a1.getArea().intersects(areas.get(i).getArea())) {
+                        if (areas.get(i).getColor() == c) {
+                            b = false;
+                            break;
+                        } else {
+                            b = true;
+                        }
+                    }
+                }
+            }
+        }
+        return b;
     }
 
     /**
      * @return the rectangles
      */
-    public LinkedList<Rectangle> getRectangles() {
+    public LinkedList<Area> getRectangles() {
         return rectangles;
     }
 
     /**
      * @param rectangles the rectangles to set
      */
-    public void setRectangles(LinkedList<Rectangle> rectangles) {
+    public void setRectangles(LinkedList<Area> rectangles) {
         this.rectangles = rectangles;
+
     }
 
+    /**
+     * @return the colorsls
+     */
+    public LinkedList<Color> getColorsls() {
+        return colorsls;
+    }
+
+    /**
+     * @param colorsls the colorsls to set
+     */
+    public void setColorsls(LinkedList<Color> colorsls) {
+        this.colorsls = colorsls;
+    }
+
+    /**
+     * @return the minimuncolors
+     */
     /**
      * @return the colors
      */
-    public LinkedList<Color> getColors() {
-        return colors;
-    }
-
-    /**
-     * @param colors the colors to set
-     */
-    public void setColors(LinkedList<Color> colors) {
-        this.colors = colors;
-    }
-
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Code;
+package Tree;
 
 /**
  *
@@ -19,9 +19,10 @@ public class Node<T> {
         this.element = element;
     }
 
-    Node() {
-        
+    public Node() {
     }
+
+    
 
     /**
      * @return the element

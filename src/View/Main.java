@@ -5,10 +5,12 @@
  */
 package View;
 
+import Tree.Tree;
 import Code.*;
 import java.awt.Panel;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,11 +21,11 @@ public class Main extends javax.swing.JFrame {
     
     LinkedList<Point> points;
     Control c;
-    LinkedList<Rectangle> recs;
+    LinkedList<Area> recs;
 
     public Main() {
         initComponents();
-        
+        this.setBounds(300, 300, 400, 400);
         this.setVisible(true);
         points = new LinkedList<>();
         Tree t;
@@ -75,19 +77,16 @@ public class Main extends javax.swing.JFrame {
         interface1.setLayout(interface1Layout);
         interface1Layout.setHorizontalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(btncolors, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         interface1Layout.setVerticalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
-                .addContainerGap(280, Short.MAX_VALUE)
-                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(243, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -107,6 +106,7 @@ public class Main extends javax.swing.JFrame {
     private void interface1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_interface1MouseClicked
         points.add(new Point(evt.getX(), evt.getY()));
         interface1.SetPoints(points);
+        System.out.println(evt.getX()+" "+ evt.getY());    
         this.repaint();
     }//GEN-LAST:event_interface1MouseClicked
 
@@ -118,9 +118,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btncolorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncolorsActionPerformed
-        recs = c.getRectangles();
+       
+       
+        recs = c.Colors();
         interface1.SetColors(recs);
         this.repaint();
+        
     }//GEN-LAST:event_btncolorsActionPerformed
 
     /**
