@@ -25,7 +25,7 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
-        this.setBounds(300, 300, 400, 400);
+        this.setBounds(350, 200, 500, 500);
         this.setVisible(true);
         points = new LinkedList<>();
         Tree t;
@@ -118,8 +118,6 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btncolorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncolorsActionPerformed
-       
-       
         recs = c.Colors();
         interface1.SetColors(recs);
         this.repaint();

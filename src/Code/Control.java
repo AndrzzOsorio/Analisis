@@ -205,66 +205,51 @@ public class Control {
     }
 
     public LinkedList<Area> Colors() {
-
-        LinkedList<Area> temporal = new LinkedList<>();
-        for (int i = 0; i < rectangles.size(); i++) {
-            temporal.add((Area) (rectangles.get(i).clone()));
-        }
-        for (int i = 0; i < temporal.size(); i++) {
-            temporal.get(i).getArea().setBounds((int) temporal.get(i).getArea().getX() - 1, (int) temporal.get(i).getArea().getY() - 1, (int) temporal.get(i).getArea().getWidth() + 2, (int) temporal.get(i).getArea().getHeight() + 2);
-
-        }
-        for (int i = 0; i < temporal.size(); i++) {
-                    paintAreas(temporal, i);
-        }        return temporal;
+          for (int i = 0; i < rectangles.size(); i++) {
+                 paintAreas(rectangles, i);
+        }        return rectangles;
     }
 
     public void paintAreas(LinkedList<Area> areas, int x) {
         Area a = areas.get(x);
-        if (a.getColor() == null) {
+        a.getArea().grow(1, 1);
+        if (x == 0) {
             this.Newcolor();
             a.setColor(this.colorsls.getFirst());
-        }
-        Color aux = null;
-        
-        for (int i = 0; i < areas.size(); i++) {
+        } else {
+            Color aux = null;
             boolean analice = true;
-            if (areas.get(i) != a) {
-                if (a.getArea().intersects(areas.get(i).getArea()) /*&& areas.get(i).getColor() == null*/) {
-                    for (Color color : this.colorsls) {
-                        if (analice && colorselection(a, areas.get(i), color, areas)) {
-                            aux = color;
-                            analice = false;
-                        }
-                    }
-                    if (aux == null) {
-                        this.Newcolor();
-                        aux = this.colorsls.getLast();
-                    }
-                    areas.get(i).setColor(aux);
+            for (Color color : this.colorsls) {
+                if (analice && colorselection(a, color, areas)) {
+                    aux = color;
+                    analice = false;
                 }
             }
-
+            if (aux == null) {
+                this.Newcolor();
+                aux = this.colorsls.getLast();
+            }
+            a.setColor(aux);
         }
-
+        a.getArea().grow(-1, -1);
     }
 
-    public boolean colorselection(Area a, Area a1, Color c, LinkedList<Area> areas) {
+    public boolean colorselection(Area a, Color c, LinkedList<Area> areas) {
         boolean b = false;
-        if (a.getColor() != c) {
-            for (int i = 0; i < areas.size(); i++) {
-                if (a != areas.get(i) && a1 != areas.get(i)) {
-                    if (a.getArea().intersects(areas.get(i).getArea()) && a1.getArea().intersects(areas.get(i).getArea())) {
-                        if (areas.get(i).getColor() == c) {
-                            b = false;
-                            break;
-                        } else {
-                            b = true;
-                        }
+        //if (a.getColor() != c) {
+        for (int i = 0; i < areas.size(); i++) {
+            if (a != areas.get(i)) {
+                if (a.getArea().intersects(areas.get(i).getArea())) {
+                    if (areas.get(i).getColor() == c) {
+                        b = false;
+                        break;
+                    } else {
+                        b = true;
                     }
                 }
             }
         }
+        //}
         return b;
     }
 
