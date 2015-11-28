@@ -206,6 +206,57 @@ public class Control {
 
     }
 
+    public LinkedList<Area> Colors2() {
+        for (int i = 0; i < rectangles.size(); i++) {
+            paintAreas2(rectangles, i);
+        }
+        return rectangles;
+    }
+
+    public void paintAreas2(LinkedList<Area> areas, int x) {
+        Area a = areas.get(x);
+        a.getArea().grow(1, 1);
+        if (x == 0) {
+
+            a.setColor(this.colorsls.getFirst());
+        } else {
+            Color aux = null;
+            boolean analice = true;
+            for (Color color : this.colorsls) {
+                if (analice && colorselection2(a, color, areas)) {
+                    aux = color;
+                    analice = false;
+                }
+            }
+            if (aux == null) {
+
+                aux = this.colorsls.getLast();
+            }
+            a.setColor(aux);
+        }
+        a.getArea().grow(-1, -1);
+
+    }
+
+    public boolean colorselection2(Area a, Color c, LinkedList<Area> areas) {
+        boolean b = false;
+        //if (a.getColor() != c) {
+        for (int i = 0; i < areas.size(); i++) {
+            if (a != areas.get(i)) {
+                if (a.getArea().intersects(areas.get(i).getArea())) {
+                    if (areas.get(i).getColor() == c) {
+                        b = false;
+                        break;
+                    } else {
+                        b = true;
+                    }
+                }
+            }
+        }
+        //}
+        return b;
+    }
+
     public LinkedList<Area> Colors() {
         for (int i = 0; i < rectangles.size(); i++) {
             paintAreas(rectangles, i);
@@ -273,18 +324,18 @@ public class Control {
         return aux;
     }
 
-    public void group(LinkedList<Point> p) {
+    public void group(LinkedList<Point> p, int w, int h) {
         for (int i = 0; i < p.size(); i++) {
-            if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() < 250) {
+            if (p.get(i).getCoordx() < w / 2 && p.get(i).getCoordy() < h / 2) {
                 p.get(i).setPointcolor(Color.PINK);
             }
-            if (p.get(i).getCoordx() > 250 && p.get(i).getCoordy() < 250) {
+            if (p.get(i).getCoordx() > w / 2 && p.get(i).getCoordy() < h / 2) {
                 p.get(i).setPointcolor(Color.WHITE);
             }
-            if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() > 250) {
+            if (p.get(i).getCoordx() < w / 2 && p.get(i).getCoordy() > h / 2) {
                 p.get(i).setPointcolor(Color.BLUE);
             }
-            if (p.get(i).getCoordx() > 250 && p.get(i).getCoordy() > 250) {
+            if (p.get(i).getCoordx() > w / 2 && p.get(i).getCoordy() > h / 2) {
                 p.get(i).setPointcolor(Color.RED);
             }
         }

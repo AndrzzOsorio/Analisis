@@ -50,6 +50,7 @@ public class Point {
 
         g.setColor(getPointcolor());
         g.fillOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
+        g.drawOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
     }
 
     /**
