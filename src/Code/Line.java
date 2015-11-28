@@ -1,16 +1,18 @@
-
 package Code;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
-
 public class Line {
+    
     private Point start;
     private Point end;
-
+    private Color colorl;
+    
     public Line(Point start, Point end) {
         this.start = start;
         this.end = end;
+        this.colorl = Color.BLACK;
     }
 
     /**
@@ -41,8 +43,25 @@ public class Line {
         this.end = end;
     }
     
-    public void Draw(Graphics g){
-        g.drawLine((int)(this.getStart().getCoordx()),(int)(this.getStart().getCoordy()),(int)(this.getEnd().getCoordx()), (int)(this.getEnd().getCoordy()));
+    public void Draw(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawLine((int) (this.getStart().getCoordx()), (int) (this.getStart().getCoordy()), (int) (this.getEnd().getCoordx()), (int) (this.getEnd().getCoordy()));
+        
+        
     }
-            
+
+    /**
+     * @return the colorl
+     */
+    public Color getColorl() {
+        return colorl;
+    }
+
+    /**
+     * @param colorl the colorl to set
+     */
+    public void setColorl(Color colorl) {
+        this.colorl = colorl;
+    }
+    
 }

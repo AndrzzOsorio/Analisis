@@ -47,7 +47,7 @@ public class Point {
     }
 
     public void Draw(Graphics g) {
-        g.drawOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
+
         g.setColor(getPointcolor());
         g.fillOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
     }

@@ -139,10 +139,10 @@ public class Main extends javax.swing.JFrame {
             interface1.SetPoints(points);
             this.repaint();
         } else if (PointSelection(point)) {
-            if(c.contains(point).size()>1){
-            recs = c.contains(point);
-            interface1.SetColors(recs);
-            this.repaint();
+            if (c.contains(point).size() > 1) {
+                recs = c.contains(point);
+                interface1.SetColors(recs);
+                this.repaint();
             }
         }
 
@@ -166,6 +166,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         c.group(points);
+        this.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

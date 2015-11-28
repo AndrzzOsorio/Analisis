@@ -276,7 +276,16 @@ public class Control {
     public void group(LinkedList<Point> p) {
         for (int i = 0; i < p.size(); i++) {
             if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() < 250) {
+                p.get(i).setPointcolor(Color.PINK);
+            }
+            if (p.get(i).getCoordx() > 250 && p.get(i).getCoordy() < 250) {
+                p.get(i).setPointcolor(Color.WHITE);
+            }
+            if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() > 250) {
                 p.get(i).setPointcolor(Color.BLUE);
+            }
+            if (p.get(i).getCoordx() > 250 && p.get(i).getCoordy() > 250) {
+                p.get(i).setPointcolor(Color.RED);
             }
         }
     }
