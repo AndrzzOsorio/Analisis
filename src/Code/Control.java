@@ -263,9 +263,11 @@ public class Control {
         for (int i = 0; i < rectangles.size(); i++) {
             if (rectangles.get(i).getArea().intersects(pt)) {
                 aux.add(rectangles.get(i));
-                aux.getLast().setColor(Color.yellow);
             }
          }
+        for (Area aux1 : aux) {
+            aux1.setColor(Color.yellow);
+        }
         return aux;
     }
 

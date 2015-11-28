@@ -216,9 +216,9 @@ public class Main extends javax.swing.JFrame {
         boolean intersect = false;
         for (int i = 0; i < points.size(); i++) {
             if (p.getCoordx() >= points.get(i).getCoordx()
-                    && p.getCoordx() <= points.get(i).getCoordx() + 7
+                    && p.getCoordx() <= points.get(i).getCoordx() + 10
                     && p.getCoordy() >= points.get(i).getCoordy()
-                    && p.getCoordy() <= points.get(i).getCoordy() + 7) {
+                    && p.getCoordy() <= points.get(i).getCoordy() + 10) {
                 intersect = true;
             }
 
