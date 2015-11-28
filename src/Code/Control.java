@@ -257,20 +257,22 @@ public class Control {
         return b;
     }
 
-    public void contains(Point p) {
+    public LinkedList<Area> contains(Point p) {
+        LinkedList<Area> aux = new LinkedList<>();
         Rectangle pt = new Rectangle((int) p.getCoordx() - 2, (int) p.getCoordy() - 2, 4, 4);
         for (int i = 0; i < rectangles.size(); i++) {
             if (rectangles.get(i).getArea().intersects(pt)) {
-                rectangles.get(i).setColor(Color.yellow);
+                aux.add(rectangles.get(i));
+                aux.getLast().setColor(Color.yellow);
             }
-
-        }
+         }
+        return aux;
     }
 
-    public void agrupar(LinkedList<Point> p) {
+    public void group(LinkedList<Point> p) {
         for (int i = 0; i < p.size(); i++) {
             if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() < 250) {
-             p.get(i).setColorpunto(Color.BLUE);
+             p.get(i).setPointcolor(Color.BLUE);
             }
         }
     }

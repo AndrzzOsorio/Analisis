@@ -57,8 +57,9 @@ public class Interface extends javax.swing.JPanel {
         }
         if (!(point.isEmpty())) {
             for (Point point1 : point) {
-                point1.setColorpunto(point1.getColorpunto());
+                point1.setPointcolor(point1.getPointcolor());
                 point1.Draw(g);
+                
             }
         }
         if (c != null && c.getT().getRoot() != null) {

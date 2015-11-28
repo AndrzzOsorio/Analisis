@@ -22,10 +22,10 @@ import javax.swing.JOptionPane;
 public class Main extends javax.swing.JFrame {
 
     LinkedList<Point> points;
-    Point punto = new Point();
+    Point point = new Point();
     Control c;
     LinkedList<Area> recs;
-    Boolean Pintar = true;
+    Boolean painting = true;
 
     public Main(LinkedList<Point> points, Control c, LinkedList<Area> recs, JButton btncolors, Interface interface1, JButton jButton1) throws HeadlessException {
         this.points = points;
@@ -133,16 +133,18 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void interface1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_interface1MouseClicked
-        punto = new Point(evt.getX(), evt.getY());
-        if (Pintar == true) {
+        point = new Point(evt.getX(), evt.getY());
+        if (painting == true) {
             points.add(new Point(evt.getX(), evt.getY()));
 
             interface1.SetPoints(points);
-            System.out.println(evt.getX() + " " + evt.getY());
-            this.repaint();
-        } else if (Pintar == false) {
 
-            mismoPunto(punto);
+            this.repaint();
+        } else if (PointSelection(point)) {
+
+            recs = c.contains(point);
+            interface1.SetColors(recs);
+            this.repaint();
 
         }
 
@@ -152,7 +154,7 @@ public class Main extends javax.swing.JFrame {
         c.standar(points, this.getWidth(), this.getHeight());
         interface1.SetControl(c);
         this.repaint();
-        Pintar = false;
+        painting = false;
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -160,12 +162,12 @@ public class Main extends javax.swing.JFrame {
         recs = c.Colors();
         interface1.SetColors(recs);
         this.repaint();
-        Pintar = false;
+
 
     }//GEN-LAST:event_btncolorsActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       c.agrupar(points);
+        c.group(points);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -210,21 +212,18 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 
-    private void mismoPunto(Point punto) {
+    private boolean PointSelection(Point p) {
+        boolean intersect = false;
         for (int i = 0; i < points.size(); i++) {
-            if (punto.getCoordx() >= points.get(i).getCoordx()
-                    && punto.getCoordx() <= points.get(i).getCoordx() + 5
-                    && punto.getCoordy() >= points.get(i).getCoordy()
-                    && punto.getCoordy() <= points.get(i).getCoordy() + 5) {
-
-                System.out.println("P");
-                c.contains(points.get(i));
-                this.repaint();
-
+            if (p.getCoordx() >= points.get(i).getCoordx()
+                    && p.getCoordx() <= points.get(i).getCoordx() + 7
+                    && p.getCoordy() >= points.get(i).getCoordy()
+                    && p.getCoordy() <= points.get(i).getCoordy() + 7) {
+                intersect = true;
             }
 
         }
-
+        return intersect;
     }
 
 }

@@ -7,7 +7,7 @@ public class Point {
 
     private double coordx;
     private double coordy;
-    private Color colorpunto;
+    private Color pointcolor;
 
     public Point() {
     }
@@ -15,7 +15,7 @@ public class Point {
     public Point(double coordx, double coordy) {
         this.coordx = coordx;
         this.coordy = coordy;
-        this.colorpunto = Color.black;
+        this.pointcolor = Color.black;
     }
 
     /**
@@ -48,21 +48,21 @@ public class Point {
 
     public void Draw(Graphics g) {
         g.drawOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
-        g.setColor(getColorpunto());
+        g.setColor(getPointcolor());
         g.fillOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
     }
 
     /**
      * @return the colorpunto
      */
-    public Color getColorpunto() {
-        return colorpunto;
+    public Color getPointcolor() {
+        return pointcolor;
     }
 
     /**
      * @param colorpunto the colorpunto to set
      */
-    public void setColorpunto(Color colorpunto) {
-        this.colorpunto = colorpunto;
+    public void setPointcolor(Color colorpunto) {
+        this.pointcolor = colorpunto;
     }
 }
