@@ -259,11 +259,11 @@ public class Control {
 
     public LinkedList<Area> contains(Point p) {
         LinkedList<Area> aux = new LinkedList<>();
-        Rectangle pt = new Rectangle((int) p.getCoordx() - 2, (int) p.getCoordy() - 2, 4, 4);
+        Rectangle pt = new Rectangle((int) p.getCoordx() - 3, (int) p.getCoordy() - 3, 6, 6);
         for (int i = 0; i < rectangles.size(); i++) {
             if (rectangles.get(i).getArea().intersects(pt)) {
                 aux.add(rectangles.get(i));
-            }
+             }
          }
         for (Area aux1 : aux) {
             aux1.setColor(Color.yellow);

@@ -136,12 +136,9 @@ public class Main extends javax.swing.JFrame {
         point = new Point(evt.getX(), evt.getY());
         if (painting == true) {
             points.add(new Point(evt.getX(), evt.getY()));
-
             interface1.SetPoints(points);
-
             this.repaint();
         } else if (PointSelection(point)) {
-
             recs = c.contains(point);
             interface1.SetColors(recs);
             this.repaint();
