@@ -7,9 +7,12 @@ package View;
 
 import Tree.Tree;
 import Code.*;
+import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.Panel;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,18 +21,29 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JFrame {
 
-    
     LinkedList<Point> points;
+    Point punto = new Point();
     Control c;
     LinkedList<Area> recs;
+    Boolean Pintar = true;
+
+    public Main(LinkedList<Point> points, Control c, LinkedList<Area> recs, JButton btncolors, Interface interface1, JButton jButton1) throws HeadlessException {
+        this.points = points;
+        this.c = c;
+        this.recs = recs;
+        this.btncolors = btncolors;
+        this.interface1 = interface1;
+        this.jButton1 = jButton1;
+    }
 
     public Main() {
         initComponents();
-        this.setBounds(350, 200, 500, 500);
+
+        this.setBounds(0, 0, 500, 500);
         this.setVisible(true);
         points = new LinkedList<>();
         Tree t;
-        c =new Control();
+        c = new Control();
         recs = new LinkedList<>();
 
     }
@@ -46,6 +60,7 @@ public class Main extends javax.swing.JFrame {
         interface1 = new View.Interface();
         jButton1 = new javax.swing.JButton();
         btncolors = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,17 +88,31 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(153, 0, 0));
+        jButton2.setForeground(new java.awt.Color(240, 240, 240));
+        jButton2.setText("Agrupar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout interface1Layout = new javax.swing.GroupLayout(interface1);
         interface1.setLayout(interface1Layout);
         interface1Layout.setHorizontalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btncolors, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
         interface1Layout.setVerticalGroup(
             interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
-                .addContainerGap(243, Short.MAX_VALUE)
+                .addContainerGap(209, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -104,25 +133,40 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void interface1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_interface1MouseClicked
-        points.add(new Point(evt.getX(), evt.getY()));
-        interface1.SetPoints(points);
-        System.out.println(evt.getX()+" "+ evt.getY());    
-        this.repaint();
+        punto = new Point(evt.getX(), evt.getY());
+        if (Pintar == true) {
+            points.add(new Point(evt.getX(), evt.getY()));
+
+            interface1.SetPoints(points);
+            System.out.println(evt.getX() + " " + evt.getY());
+            this.repaint();
+        } else if (Pintar == false) {
+
+            mismoPunto(punto);
+
+        }
+
     }//GEN-LAST:event_interface1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         c.standar(points, this.getWidth(), this.getHeight());
         interface1.SetControl(c);
         this.repaint();
-        
+        Pintar = false;
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btncolorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncolorsActionPerformed
         recs = c.Colors();
         interface1.SetColors(recs);
         this.repaint();
-        
+        Pintar = false;
+
     }//GEN-LAST:event_btncolorsActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       c.agrupar(points);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,5 +207,24 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btncolors;
     private View.Interface interface1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
+
+    private void mismoPunto(Point punto) {
+        for (int i = 0; i < points.size(); i++) {
+            if (punto.getCoordx() >= points.get(i).getCoordx()
+                    && punto.getCoordx() <= points.get(i).getCoordx() + 5
+                    && punto.getCoordy() >= points.get(i).getCoordy()
+                    && punto.getCoordy() <= points.get(i).getCoordy() + 5) {
+
+                System.out.println("P");
+                c.contains(points.get(i));
+                this.repaint();
+
+            }
+
+        }
+
+    }
+
 }

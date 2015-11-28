@@ -1,4 +1,3 @@
-
 package Code;
 
 import java.awt.Color;
@@ -6,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import static javafx.scene.paint.Color.color;
 
+public class Area implements Cloneable {
 
-public class Area implements Cloneable{
     private double x;
     private double y;
     private int w;
@@ -23,7 +22,7 @@ public class Area implements Cloneable{
         this.y = y;
         this.w = w;
         this.h = h;
-        area = new Rectangle((int)x,(int) y, w, h);
+        area = new Rectangle((int) x, (int) y, w, h);
         color = null;
     }
 
@@ -96,19 +95,19 @@ public class Area implements Cloneable{
     public void setArea(Rectangle area) {
         this.area = area;
     }
-    
-    public void Draw (Graphics g){
-        g.drawRect((int)x, (int)y, w, h);
+
+    public void Draw(Graphics g) {
+        g.drawRect((int) x, (int) y, w, h);
         g.setColor(getColor());
-        g.fillRect((int)x, (int)y, w, h);
+        g.fillRect((int) x, (int) y, w, h);
     }
-    
+
     @Override
     public Object clone() {
-       Object obj=null;
-        try{
-            obj=super.clone();
-        }catch(CloneNotSupportedException ex){
+        Object obj = null;
+        try {
+            obj = super.clone();
+        } catch (CloneNotSupportedException ex) {
             System.out.println("cannot dupply element");
         }
         return obj;
@@ -127,5 +126,5 @@ public class Area implements Cloneable{
     public void setColor(Color color) {
         this.color = color;
     }
-    
+
 }

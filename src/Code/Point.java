@@ -1,15 +1,13 @@
-
 package Code;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-
-
 public class Point {
-    
+
     private double coordx;
     private double coordy;
+    private Color colorpunto;
 
     public Point() {
     }
@@ -17,6 +15,7 @@ public class Point {
     public Point(double coordx, double coordy) {
         this.coordx = coordx;
         this.coordy = coordy;
+        this.colorpunto = Color.black;
     }
 
     /**
@@ -47,15 +46,23 @@ public class Point {
         this.coordy = coordy;
     }
 
-    
-    
-    public void Draw (Graphics g){
-        g.drawOval((int)coordx-3, (int)coordy-3, 6, 6);
-        g.setColor(Color.black);
-        g.fillOval((int)coordx-3, (int)coordy-3, 6, 6);
+    public void Draw(Graphics g) {
+        g.drawOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
+        g.setColor(getColorpunto());
+        g.fillOval((int) getCoordx() - 3, (int) getCoordy() - 3, 6, 6);
     }
-    }
-    
-    
-    
 
+    /**
+     * @return the colorpunto
+     */
+    public Color getColorpunto() {
+        return colorpunto;
+    }
+
+    /**
+     * @param colorpunto the colorpunto to set
+     */
+    public void setColorpunto(Color colorpunto) {
+        this.colorpunto = colorpunto;
+    }
+}

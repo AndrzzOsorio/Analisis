@@ -6,6 +6,7 @@
 package View;
 
 import Code.*;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
@@ -25,7 +26,6 @@ public class Interface extends javax.swing.JPanel {
      */
     public Interface() {
         initComponents();
-        
 
     }
 
@@ -34,12 +34,13 @@ public class Interface extends javax.swing.JPanel {
         this.c = c;
         this.paintComponent(this.getGraphics());
     }
-    
-    public  void SetPoints (LinkedList<Point> p){
+
+    public void SetPoints(LinkedList<Point> p) {
         this.point = p;
         this.paintComponent(this.getGraphics());
     }
-        public void SetColors(LinkedList<Area> recs){
+
+    public void SetColors(LinkedList<Area> recs) {
         this.recs = recs;
         this.paintComponent(this.getGraphics());
     }
@@ -47,22 +48,23 @@ public class Interface extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (!recs.isEmpty()){
+        if (!recs.isEmpty()) {
             for (Area rectangle : recs) {
                 rectangle.setColor(rectangle.getColor());
                 rectangle.Draw(g);
-                
+
             }
         }
-        if(!(point.isEmpty())){
+        if (!(point.isEmpty())) {
             for (Point point1 : point) {
+                point1.setColorpunto(point1.getColorpunto());
                 point1.Draw(g);
             }
         }
-        if(c != null && c.getT().getRoot() != null){
-        c.Lines(g, c.getT().getRoot());
+        if (c != null && c.getT().getRoot() != null) {
+            c.Lines(g, c.getT().getRoot());
         }
-     }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

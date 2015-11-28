@@ -40,6 +40,7 @@ public class Control {
      */
     public void setT(Tree t) {
         this.t = t;
+
     }
 
     public void standar(LinkedList<Point> p, int w, int h) {
@@ -118,6 +119,7 @@ public class Control {
                 Createsquaresx(p.getFirst(), x, y, w, h);
             }
         }
+
     }
 
     public double hypotenusecompare(Point a, Point b) {
@@ -199,15 +201,16 @@ public class Control {
     }
 
     public void Newcolor() {
-        Color randomColor2 = new Color((int) (Math.random() * 254),(int) (Math.random() * 254),(int) (Math.random() * 254));
+        Color randomColor2 = new Color((int) (Math.random() * 254), (int) (Math.random() * 254), (int) (Math.random() * 254));
         colorsls.add(randomColor2);
 
     }
 
     public LinkedList<Area> Colors() {
-          for (int i = 0; i < rectangles.size(); i++) {
-                 paintAreas(rectangles, i);
-        }        return rectangles;
+        for (int i = 0; i < rectangles.size(); i++) {
+            paintAreas(rectangles, i);
+        }
+        return rectangles;
     }
 
     public void paintAreas(LinkedList<Area> areas, int x) {
@@ -232,6 +235,7 @@ public class Control {
             a.setColor(aux);
         }
         a.getArea().grow(-1, -1);
+
     }
 
     public boolean colorselection(Area a, Color c, LinkedList<Area> areas) {
@@ -251,6 +255,24 @@ public class Control {
         }
         //}
         return b;
+    }
+
+    public void contains(Point p) {
+        Rectangle pt = new Rectangle((int) p.getCoordx() - 2, (int) p.getCoordy() - 2, 4, 4);
+        for (int i = 0; i < rectangles.size(); i++) {
+            if (rectangles.get(i).getArea().intersects(pt)) {
+                rectangles.get(i).setColor(Color.yellow);
+            }
+
+        }
+    }
+
+    public void agrupar(LinkedList<Point> p) {
+        for (int i = 0; i < p.size(); i++) {
+            if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() < 250) {
+             p.get(i).setColorpunto(Color.BLUE);
+            }
+        }
     }
 
     /**

@@ -5,10 +5,15 @@
  */
 package Graph;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author 4NDR35
  */
 public class Graph {
-    
+    Edge[][] coneccion;
+    int puntoinicial;
+    int puntofinal;
+    int linea;
 }
