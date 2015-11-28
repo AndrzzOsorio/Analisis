@@ -263,18 +263,20 @@ public class Control {
         for (int i = 0; i < rectangles.size(); i++) {
             if (rectangles.get(i).getArea().intersects(pt)) {
                 aux.add(rectangles.get(i));
-             }
-         }
+            }
+        }
         for (Area aux1 : aux) {
             aux1.setColor(Color.yellow);
+
         }
+
         return aux;
     }
 
     public void group(LinkedList<Point> p) {
         for (int i = 0; i < p.size(); i++) {
             if (p.get(i).getCoordx() < 250 && p.get(i).getCoordy() < 250) {
-             p.get(i).setPointcolor(Color.BLUE);
+                p.get(i).setPointcolor(Color.BLUE);
             }
         }
     }

@@ -139,10 +139,11 @@ public class Main extends javax.swing.JFrame {
             interface1.SetPoints(points);
             this.repaint();
         } else if (PointSelection(point)) {
+            if(c.contains(point).size()>1){
             recs = c.contains(point);
             interface1.SetColors(recs);
             this.repaint();
-
+            }
         }
 
     }//GEN-LAST:event_interface1MouseClicked
