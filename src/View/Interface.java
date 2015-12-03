@@ -26,6 +26,7 @@ public class Interface extends javax.swing.JPanel {
      */
     public Interface() {
         initComponents();
+        
 
     }
 
@@ -48,10 +49,13 @@ public class Interface extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setColor(Color.black);
+        g.drawLine(this.getX(), this.getY()+this.getHeight()-1,this.getX()+this.getWidth(), this.getY()+this.getHeight()-1);
         if (!recs.isEmpty()) {
             for (Area rectangle : recs) {
                 rectangle.setColor(rectangle.getColor());
                 rectangle.Draw(g);
+                
 
             }
         }

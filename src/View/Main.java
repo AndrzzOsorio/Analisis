@@ -26,10 +26,11 @@ public class Main extends javax.swing.JFrame {
     Control c;
     LinkedList<Area> recs;
     Boolean painting = true;
-    private int NWeight = 340;
-    private int NHeight = 300;
+    private int NWeight = 400;
+    private int NHeight = 500;
     private int NPoints = 0;
     private int NColors = 0;
+    
 
     public Main(LinkedList<Point> points, Control c, LinkedList<Area> recs, JButton btncolors, Interface interface1, JButton jButton1) throws HeadlessException {
         this.points = points;
@@ -42,7 +43,8 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
-
+        interface1.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.setResizable(false);
         this.setBounds(0, 0, NWeight, NHeight);
         this.setVisible(true);
         points = new LinkedList<>();
@@ -62,24 +64,36 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         interface1 = new View.Interface();
-        btndivide = new javax.swing.JButton();
         btncolors = new javax.swing.JButton();
+        btndivide = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        txtheight = new javax.swing.JTextField();
-        txtweight = new javax.swing.JTextField();
-        txtcolors = new javax.swing.JTextField();
-        txtpoint = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         interface1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 interface1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout interface1Layout = new javax.swing.GroupLayout(interface1);
+        interface1.setLayout(interface1Layout);
+        interface1Layout.setHorizontalGroup(
+            interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        interface1Layout.setVerticalGroup(
+            interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 311, Short.MAX_VALUE)
+        );
+
+        btncolors.setBackground(new java.awt.Color(51, 0, 0));
+        btncolors.setForeground(new java.awt.Color(255, 255, 255));
+        btncolors.setText("Colors");
+        btncolors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncolorsActionPerformed(evt);
             }
         });
 
@@ -92,125 +106,56 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btncolors.setBackground(new java.awt.Color(51, 0, 0));
-        btncolors.setForeground(new java.awt.Color(255, 255, 255));
-        btncolors.setText("Colors");
-        btncolors.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncolorsActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(153, 0, 0));
+        jButton2.setBackground(new java.awt.Color(51, 0, 0));
         jButton2.setForeground(new java.awt.Color(240, 240, 240));
-        jButton2.setText("Group");
+        jButton2.setText("Groups");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Paint");
+        jButton3.setBackground(new java.awt.Color(204, 0, 0));
+        jButton3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 11)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Automatic");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        txtheight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtheightActionPerformed(evt);
-            }
-        });
-
-        txtcolors.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtcolorsActionPerformed(evt);
-            }
-        });
-
-        txtpoint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpointActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Points");
-
-        jLabel2.setText("Colors");
-
-        jLabel3.setText("Weight");
-
-        jLabel4.setText("Height");
-
-        javax.swing.GroupLayout interface1Layout = new javax.swing.GroupLayout(interface1);
-        interface1.setLayout(interface1Layout);
-        interface1Layout.setHorizontalGroup(
-            interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(interface1Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addComponent(btndivide))
-                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(interface1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btncolors))
-                    .addGroup(interface1Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(txtpoint, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interface1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(interface1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addGap(107, 107, 107))
-                    .addGroup(interface1Layout.createSequentialGroup()
-                        .addComponent(txtcolors, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtweight, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtheight, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        interface1Layout.setVerticalGroup(
-            interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(interface1Layout.createSequentialGroup()
-                .addGap(257, 257, 257)
-                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(5, 5, 5)
-                .addGroup(interface1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btndivide, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtpoint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcolors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtweight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtheight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(interface1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btndivide, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btncolors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(interface1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(interface1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btncolors)
+                    .addComponent(btndivide))
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jButton3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -253,24 +198,12 @@ public class Main extends javax.swing.JFrame {
         this.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void txtpointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpointActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpointActionPerformed
-
-    private void txtcolorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcolorsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcolorsActionPerformed
-
-    private void txtheightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtheightActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtheightActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.setVisible(false);
-        NPoints = new Integer(txtpoint.getText());
-        NColors = new Integer(txtcolors.getText());
-        NWeight = new Integer(txtweight.getText());
-        NHeight = new Integer(txtheight.getText());
+        NPoints = new Integer(JOptionPane.showInputDialog("Please, especify the number of points"));
+        NColors = new Integer(JOptionPane.showInputDialog("Please, especify the minimun number of colors to use"));
+        NWeight = new Integer(JOptionPane.showInputDialog("Please, especify the width of the new panel"));
+        NHeight = new Integer(JOptionPane.showInputDialog("Please, especify the heigth of the new panel"));
         for (int i = 0; i < NPoints; i++) {
             points.add(new Point(Math.random() * NWeight, Math.random() * NHeight));
         }
@@ -329,14 +262,6 @@ public class Main extends javax.swing.JFrame {
     private View.Interface interface1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtcolors;
-    private javax.swing.JTextField txtheight;
-    private javax.swing.JTextField txtpoint;
-    private javax.swing.JTextField txtweight;
     // End of variables declaration//GEN-END:variables
 
     private boolean PointSelection(Point p) {
