@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,25 @@ public class Control {
     private Tree<Data> t;
     private LinkedList<Area> rectangles;
     private LinkedList<Color> colorsls;
+    LinkedList<Color> coloresP= new LinkedList<>();
+    double resultado = 0;
+    double resultado2 = 0;
+    double temp1 = Math.abs(0);
+    double temp2 = Math.abs(0);
+    Color colortmp;
+    double distance1 = 0;
+    double distance2 = 0;
+    double distance3 = 0;
+    double distance4 = 0;
+    double distanceP1 = 0;
+    double distanceP2 = 0;
+    double distanceP3 = 0;
+    double distanceP4 = 0;
+
+    LinkedList<Point> Cuadrante1 = new LinkedList<>();
+    LinkedList<Point> Cuadrante2= new LinkedList<>();
+    LinkedList<Point> Cuadrante3= new LinkedList<>();
+    LinkedList<Point> Cuadrante4= new LinkedList<>();
 
     public Control() {
         t = new Tree<>(new Node<Data>());
@@ -324,21 +344,165 @@ public class Control {
         return aux;
     }
 
-    public void group(LinkedList<Point> p, int w, int h) {
+    public void NewColorP() {
+        Color randomColor3 = new Color((int) (Math.random() * 254), (int) (Math.random() * 254), (int) (Math.random() * 254));
+        coloresP.add(randomColor3);
+    }
+
+    public void Phases2(int NWeight, int NHeight, LinkedList<Point> points) {
+        if (NWeight >= 100 && NWeight <= 500 && NHeight >= 100 && NHeight <= 500) {
+            for (int i = 0; i < points.size(); i++) {
+
+                if (points.get(i).getCoordx() < NWeight / 2 && points.get(i).getCoordy() < NHeight / 2) {
+                    Cuadrante1.add(points.get(i));
+                }
+                if (points.get(i).getCoordx() > NWeight / 2 && points.get(i).getCoordy() < NHeight / 2) {
+                    Cuadrante2.add(points.get(i));
+                }
+                if (points.get(i).getCoordx() < NWeight / 2 && points.get(i).getCoordy() > NHeight / 2) {
+                    Cuadrante3.add(points.get(i));
+                }
+                if (points.get(i).getCoordx() > NWeight / 2 && points.get(i).getCoordy() > NHeight / 2) {
+                    Cuadrante4.add(points.get(i));
+                }
+            }
+
+            for (int i = 0; i < Cuadrante1.size(); i++) {
+                if (Cuadrante1.get(i) != Cuadrante1.getLast()) {
+                    distance1 = hypotenusecompare(Cuadrante1.get(i), Cuadrante1.get(i + 1)) + distance1;
+                }
+            }
+            distanceP1 = distance1 / Cuadrante1.size();
+
+            group(points, NWeight, NHeight, distanceP1);
+
+            for (int i = 0; i < Cuadrante2.size(); i++) {
+                if (Cuadrante2.get(i) != Cuadrante2.getLast()) {
+                    distance2 = hypotenusecompare(Cuadrante2.get(i), Cuadrante2.get(i + 1)) + distance2;
+
+                }
+
+            }
+            distanceP2 = distance2 / Cuadrante2.size();
+
+            group(points, NWeight, NHeight, distanceP2);
+
+            for (int i = 0; i < Cuadrante3.size(); i++) {
+                if (Cuadrante3.get(i) != Cuadrante3.getLast()) {
+                    distance3 = hypotenusecompare(Cuadrante3.get(i), Cuadrante3.get(i + 1)) + distance3;
+
+                }
+
+            }
+            distanceP3 = distance3 / Cuadrante3.size();
+
+            group(points, NWeight, NHeight, distanceP3);
+
+            for (int i = 0; i < Cuadrante4.size(); i++) {
+                if (Cuadrante4.get(i) != Cuadrante4.getLast()) {
+                    distance4 = hypotenusecompare(Cuadrante4.get(i), Cuadrante4.get(i + 1)) + distance4;
+
+                }
+
+            }
+            distanceP4 = distance4 / Cuadrante4.size();
+
+            group(points, NWeight, NHeight, distanceP4);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "El Ancho o El Alto debe ser un Rango de 100 a 500");
+        }
+    }
+
+    public void Phases(int NWeight, int NHeight, int NPoints, LinkedList<Point> points, int NColors) {
+        if (NWeight >= 100 && NWeight <= 500 && NHeight >= 100 && NHeight <= 500) {
+            for (int i = 0; i < NPoints; i++) {
+                points.add(new Point(Math.random() *NWeight , Math.random() * NHeight));
+                if (points.get(i).getCoordx() < NWeight / 2 && points.get(i).getCoordy() < NHeight / 2) {
+                    Cuadrante1.add(points.get(i));
+                }
+                if (points.get(i).getCoordx() > NWeight / 2 && points.get(i).getCoordy() < NHeight / 2) {
+                    Cuadrante2.add(points.get(i));
+                }
+                if (points.get(i).getCoordx() < NWeight / 2 && points.get(i).getCoordy() > NHeight / 2) {
+                    Cuadrante3.add(points.get(i));
+                }
+                if (points.get(i).getCoordx() > NWeight / 2 && points.get(i).getCoordy() > NHeight / 2) {
+                    Cuadrante4.add(points.get(i));
+                }
+            }
+
+            for (int i = 0; i < Cuadrante1.size(); i++) {
+                if (Cuadrante1.get(i) != Cuadrante1.getLast()) {
+                    distance1 = hypotenusecompare(Cuadrante1.get(i), Cuadrante1.get(i + 1)) + distance1;
+                }
+            }
+            distanceP1 = distance1 / Cuadrante1.size();
+
+            group(points, NWeight, NHeight, distanceP1);
+
+            for (int i = 0; i < Cuadrante2.size(); i++) {
+                if (Cuadrante2.get(i) != Cuadrante2.getLast()) {
+                    distance2 = hypotenusecompare(Cuadrante2.get(i), Cuadrante2.get(i + 1)) + distance2;
+
+                }
+
+            }
+            distanceP2 = distance2 / Cuadrante2.size();
+
+            group(points, NWeight, NHeight, distanceP2);
+
+            for (int i = 0; i < Cuadrante3.size(); i++) {
+                if (Cuadrante3.get(i) != Cuadrante3.getLast()) {
+                    distance3 = hypotenusecompare(Cuadrante3.get(i), Cuadrante3.get(i + 1)) + distance3;
+
+                }
+
+            }
+            distanceP3 = distance3 / Cuadrante3.size();
+
+            group(points, NWeight, NHeight, distanceP3);
+
+            for (int i = 0; i < Cuadrante4.size(); i++) {
+                if (Cuadrante4.get(i) != Cuadrante4.getLast()) {
+                    distance4 = hypotenusecompare(Cuadrante4.get(i), Cuadrante4.get(i + 1)) + distance4;
+
+                }
+
+            }
+            distanceP4 = distance4 / Cuadrante4.size();
+
+            group(points, NWeight, NHeight, distanceP4);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "El Ancho o El Alto debe ser un Rango de 100 a 500");
+        }
+    }
+
+    public void group(LinkedList<Point> p, int w, int h, double d1) {
         for (int i = 0; i < p.size(); i++) {
-            if (p.get(i).getCoordx() < w / 2 && p.get(i).getCoordy() < h / 2) {
-                p.get(i).setPointcolor(Color.PINK);
-            }
-            if (p.get(i).getCoordx() > w / 2 && p.get(i).getCoordy() < h / 2) {
-                p.get(i).setPointcolor(Color.WHITE);
-            }
-            if (p.get(i).getCoordx() < w / 2 && p.get(i).getCoordy() > h / 2) {
-                p.get(i).setPointcolor(Color.BLUE);
-            }
-            if (p.get(i).getCoordx() > w / 2 && p.get(i).getCoordy() > h / 2) {
-                p.get(i).setPointcolor(Color.RED);
+            for (int j = 0; j < p.size(); j++) {
+                temp1 = p.get(i).getCoordx() - p.get(j).getCoordx();
+                temp2 = p.get(i).getCoordy() - p.get(j).getCoordy();
+                resultado = Math.abs(temp1);
+                resultado2 = Math.abs(temp2);
+                this.NewColorP();
+
+                if (resultado <= d1 && resultado2 <= d1) {
+
+                    if (p.get(i).getPointcolor() == Color.BLACK) {
+                        p.get(i).setPointcolor(coloresP.getLast());
+                        colortmp = p.get(i).getPointcolor();
+
+                    }
+                    if (p.get(j).getPointcolor() == Color.BLACK) {
+                        p.get(j).setPointcolor(colortmp);
+                    }
+
+                }
             }
         }
+
     }
 
     /**

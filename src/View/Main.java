@@ -26,11 +26,11 @@ public class Main extends javax.swing.JFrame {
     Control c;
     LinkedList<Area> recs;
     Boolean painting = true;
-    private int NWeight = 400;
+    private int NWeight = 500;
     private int NHeight = 500;
     private int NPoints = 0;
     private int NColors = 0;
-    
+    int distance = NHeight / 2;
 
     public Main(LinkedList<Point> points, Control c, LinkedList<Area> recs, JButton btncolors, Interface interface1, JButton jButton1) throws HeadlessException {
         this.points = points;
@@ -43,6 +43,7 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+      
         interface1.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         this.setResizable(false);
         this.setBounds(0, 0, NWeight, NHeight);
@@ -194,8 +195,10 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btncolorsActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        c.group(points, NWeight, NHeight);
+        c.Phases2(NWeight, NHeight, points);
+        c.group(points, NWeight, NHeight, distance);
         this.repaint();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -204,9 +207,7 @@ public class Main extends javax.swing.JFrame {
         NColors = new Integer(JOptionPane.showInputDialog("Please, especify the minimun number of colors to use"));
         NWeight = new Integer(JOptionPane.showInputDialog("Please, especify the width of the new panel"));
         NHeight = new Integer(JOptionPane.showInputDialog("Please, especify the heigth of the new panel"));
-        for (int i = 0; i < NPoints; i++) {
-            points.add(new Point(Math.random() * NWeight, Math.random() * NHeight));
-        }
+        c.Phases(NWeight, NHeight, NPoints, points, NColors);
         interface1.SetPoints(points);
         c.standar(points, NWeight, NHeight);
         interface1.SetControl(c);
@@ -216,9 +217,13 @@ public class Main extends javax.swing.JFrame {
         recs = c.Colors2();
 
         interface1.SetColors(recs);
+
         this.repaint();
         this.setBounds(0, 0, NWeight, NHeight);
+    
+       
         this.setVisible(true);
+        painting = false;
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
