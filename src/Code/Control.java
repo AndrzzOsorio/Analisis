@@ -21,7 +21,7 @@ public class Control {
     private Tree<Data> t;
     private LinkedList<Area> rectangles;
     private LinkedList<Color> colorsls;
-    LinkedList<Color> coloresP= new LinkedList<>();
+    LinkedList<Color> coloresP = new LinkedList<>();
     double resultado = 0;
     double resultado2 = 0;
     double temp1 = Math.abs(0);
@@ -35,16 +35,17 @@ public class Control {
     double distanceP2 = 0;
     double distanceP3 = 0;
     double distanceP4 = 0;
-
+    private LinkedList<Line> listoflines;
     LinkedList<Point> Cuadrante1 = new LinkedList<>();
-    LinkedList<Point> Cuadrante2= new LinkedList<>();
-    LinkedList<Point> Cuadrante3= new LinkedList<>();
-    LinkedList<Point> Cuadrante4= new LinkedList<>();
+    LinkedList<Point> Cuadrante2 = new LinkedList<>();
+    LinkedList<Point> Cuadrante3 = new LinkedList<>();
+    LinkedList<Point> Cuadrante4 = new LinkedList<>();
 
     public Control() {
         t = new Tree<>(new Node<Data>());
         rectangles = new LinkedList<>();
         colorsls = new LinkedList<>();
+        listoflines = new LinkedList<>();
 
     }
 
@@ -82,7 +83,7 @@ public class Control {
             Point temporalpoint = p.getFirst();
             if (root != null) {
                 for (int i = 0; i < pts.size(); i++) {
-                    temp = hypotenusecompare(pts.get(i), new Point(x + (w / 2), y + (h / 2)));
+                    temp = hypotenusecompare(pts.get(i), new Point(x + (w / 2), y + (h / 2), -100));
                     if (minor > temp) {
                         minor = temp;
                         temporalpoint = pts.get(i);
@@ -92,7 +93,7 @@ public class Control {
                 if (orientation == 1) {
                     LinkedList<Point> uperPoints = extract(pts, 0, index);
                     LinkedList<Point> lowerPoints = extract(pts, index + 1, pts.size());
-                    Data nData = new Data(new Line(new Point(x, temporalpoint.getCoordy()), new Point(w, temporalpoint.getCoordy())), temporalpoint);
+                    Data nData = new Data(new Line(new Point(x, temporalpoint.getCoordy(), temporalpoint.getId()), new Point(w, temporalpoint.getCoordy(), temporalpoint.getId()), orientation, temporalpoint.getId()), temporalpoint);
                     root.setElement(nData);
                     if (uperPoints.size() >= 1) {
                         root.setLeft(new Node<Data>());
@@ -109,7 +110,7 @@ public class Control {
                 } else {
                     LinkedList<Point> leftPoints = extract(pts, 0, index);
                     LinkedList<Point> rightPoints = extract(pts, index + 1, pts.size());
-                    Data nData = new Data(new Line(new Point(temporalpoint.getCoordx(), y), new Point(temporalpoint.getCoordx(), h)), temporalpoint);
+                    Data nData = new Data(new Line(new Point(temporalpoint.getCoordx(), y, temporalpoint.getId()), new Point(temporalpoint.getCoordx(), h, temporalpoint.getId()), orientation, temporalpoint.getId()), temporalpoint);
                     root.setElement(nData);
                     if (leftPoints.size() >= 1) {
                         root.setLeft(new Node<Data>());
@@ -129,12 +130,12 @@ public class Control {
         } else if (p.size() == 1) {
             if (orientation == 1) {
 
-                Data nData = new Data(new Line(new Point(x, p.getFirst().getCoordy()), new Point(w, p.getFirst().getCoordy())), p.getFirst());
+                Data nData = new Data(new Line(new Point(x, p.getFirst().getCoordy(), p.getFirst().getId()), new Point(w, p.getFirst().getCoordy(), p.getFirst().getId()), orientation, p.getFirst().getId()), p.getFirst());
                 root.setElement(nData);
                 Createsquaresy(p.getFirst(), x, y, w, h);
 
             } else if (orientation == -1) {
-                Data nData = new Data(new Line(new Point(p.getFirst().getCoordx(), y), new Point(p.getFirst().getCoordx(), h)), p.getFirst());
+                Data nData = new Data(new Line(new Point(p.getFirst().getCoordx(), y, p.getFirst().getId()), new Point(p.getFirst().getCoordx(), h, p.getFirst().getId()), orientation, p.getFirst().getId()), p.getFirst());
                 root.setElement(nData);
                 Createsquaresx(p.getFirst(), x, y, w, h);
             }
@@ -189,6 +190,9 @@ public class Control {
     public void Lines(Graphics g, Node<Data> root) {
         if (root.getElement() != null) {
             root.getElement().getLine().Draw(g);
+            if (!listoflines.contains(root.getElement().getLine())) {
+                listoflines.add(root.getElement().getLine());
+            }
             if (root.getLeft() != null && root.getLeft().getElement() != null) {
                 Lines(g, root.getLeft());
             }
@@ -415,9 +419,11 @@ public class Control {
     }
 
     public void Phases(int NWeight, int NHeight, int NPoints, LinkedList<Point> points, int NColors) {
+        int id = 0;
         if (NWeight >= 100 && NWeight <= 500 && NHeight >= 100 && NHeight <= 500) {
             for (int i = 0; i < NPoints; i++) {
-                points.add(new Point(Math.random() *NWeight , Math.random() * NHeight));
+                points.add(new Point(Math.random() * NWeight, Math.random() * NHeight, id));
+                id++;
                 if (points.get(i).getCoordx() < NWeight / 2 && points.get(i).getCoordy() < NHeight / 2) {
                     Cuadrante1.add(points.get(i));
                 }
@@ -532,6 +538,20 @@ public class Control {
      */
     public void setColorsls(LinkedList<Color> colorsls) {
         this.colorsls = colorsls;
+    }
+
+    /**
+     * @return the listoflines
+     */
+    public LinkedList<Line> getListoflines() {
+        return listoflines;
+    }
+
+    /**
+     * @param listoflines the listoflines to set
+     */
+    public void setListoflines(LinkedList<Line> listoflines) {
+        this.listoflines = listoflines;
     }
 
     /**

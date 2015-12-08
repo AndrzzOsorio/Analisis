@@ -8,13 +8,15 @@ public class Point {
     private double coordx;
     private double coordy;
     private Color pointcolor;
+    private int id;
 
     public Point() {
     }
 
-    public Point(double coordx, double coordy) {
+    public Point(double coordx, double coordy, int id) {
         this.coordx = coordx;
         this.coordy = coordy;
+        this.id = id;
         this.pointcolor = Color.black;
     }
 
@@ -65,5 +67,19 @@ public class Point {
      */
     public void setPointcolor(Color colorpunto) {
         this.pointcolor = colorpunto;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -6,6 +6,7 @@
 package View;
 
 import Code.*;
+import Graph.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -19,14 +20,16 @@ public class Interface extends javax.swing.JPanel {
 
     private LinkedList<Point> point = new LinkedList<>();
     private LinkedList<Area> recs = new LinkedList<>();
+    private LinkedList<Point> intersectionpoints = new LinkedList<>();
+    
     Control c;
+    Graph gr;
 
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
-        
 
     }
 
@@ -41,8 +44,18 @@ public class Interface extends javax.swing.JPanel {
         this.paintComponent(this.getGraphics());
     }
 
+    public void SetIntPoints(LinkedList<Point> p) {
+        this.intersectionpoints = p;
+        this.paintComponent(this.getGraphics());
+    }
+
     public void SetColors(LinkedList<Area> recs) {
         this.recs = recs;
+        this.paintComponent(this.getGraphics());
+    }
+
+    public void SetGraph(Graph gr) {
+        this.gr = gr;
         this.paintComponent(this.getGraphics());
     }
 
@@ -50,25 +63,53 @@ public class Interface extends javax.swing.JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.black);
-        g.drawLine(this.getX(), this.getY()+this.getHeight()-1,this.getX()+this.getWidth(), this.getY()+this.getHeight()-1);
+        g.drawLine(this.getX(), this.getY() + this.getHeight() - 1, this.getX() + this.getWidth(), this.getY() + this.getHeight() - 1);
         if (!recs.isEmpty()) {
             for (Area rectangle : recs) {
                 rectangle.setColor(rectangle.getColor());
                 rectangle.Draw(g);
-                
 
+            }
+        }
+        
+        if (!(intersectionpoints.isEmpty())) {
+            for (Point point1 : intersectionpoints) {
+                point1.setPointcolor(Color.RED);
+                point1.Draw(g);
+
+            }
+        }
+        if (c != null && c.getT().getRoot() != null) {
+            c.Lines(g, c.getT().getRoot());
+        }
+
+        if (gr != null) {
+            g.setColor(Color.red);
+            LinkedList<Point> pts = new LinkedList<>();
+
+            for (int i = 0; i < gr.getActualpoints().size(); i++) {
+                pts.add(gr.getActualpoints().get(i));
+            }
+            for (int i = 0; i < gr.getIntersectionpoints().size(); i++) {
+                pts.add(gr.getIntersectionpoints().get(i));
+            }
+            for (int i = 0; i < gr.getRoads().length; i++) {
+                for (int j = 0; j < gr.getRoads().length; j++) {
+                    if (gr.getRoads()[i][j] != 0) {
+                        g.drawLine((int)(pts.get(i).getCoordx()),(int)(pts.get(i).getCoordy()) , (int)(pts.get(j).getCoordx()), (int)(pts.get(j).getCoordy()));
+
+                    }
+                }
             }
         }
         if (!(point.isEmpty())) {
             for (Point point1 : point) {
                 point1.setPointcolor(point1.getPointcolor());
                 point1.Draw(g);
-                
+
             }
         }
-        if (c != null && c.getT().getRoot() != null) {
-            c.Lines(g, c.getT().getRoot());
-        }
+        
     }
 
     /**

@@ -7,13 +7,16 @@ package View;
 
 import Tree.Tree;
 import Code.*;
+import Graph.Graph;
 import java.awt.Color;
+import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.Panel;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -25,12 +28,24 @@ public class Main extends javax.swing.JFrame {
     Point point = new Point();
     Control c;
     LinkedList<Area> recs;
+    Graph graph;
     Boolean painting = true;
     private int NWeight = 500;
     private int NHeight = 500;
     private int NPoints = 0;
     private int NColors = 0;
     int distance = NHeight / 2;
+    LinkedList<Line> Lines;
+    LinkedList<Point> intersectionpoints;
+
+    @Override
+    public void layout() {
+        super.layout(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Main(GraphicsConfiguration gc) {
+        super(gc);
+    }
 
     public Main(LinkedList<Point> points, Control c, LinkedList<Area> recs, JButton btncolors, Interface interface1, JButton jButton1) throws HeadlessException {
         this.points = points;
@@ -39,11 +54,12 @@ public class Main extends javax.swing.JFrame {
         this.btncolors = btncolors;
         this.interface1 = interface1;
         this.btndivide = jButton1;
+        
     }
 
     public Main() {
         initComponents();
-      
+        graph = new Graph();
         interface1.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         this.setResizable(false);
         this.setBounds(0, 0, NWeight, NHeight);
@@ -52,6 +68,8 @@ public class Main extends javax.swing.JFrame {
         Tree t;
         c = new Control();
         recs = new LinkedList<>();
+        Lines= new LinkedList<>();
+        intersectionpoints = new LinkedList<>();
 
     }
 
@@ -69,6 +87,7 @@ public class Main extends javax.swing.JFrame {
         btndivide = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btnLines = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,7 +127,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(51, 0, 0));
-        jButton2.setForeground(new java.awt.Color(240, 240, 240));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Groups");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,46 +145,64 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnLines.setBackground(new java.awt.Color(102, 0, 0));
+        btnLines.setForeground(new java.awt.Color(255, 255, 255));
+        btnLines.setText("Lines");
+        btnLines.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(interface1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btndivide, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btncolors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btndivide, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btncolors, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLines, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(58, 58, 58))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(156, 156, 156))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(interface1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btncolors)
                     .addComponent(btndivide))
-                .addGap(2, 2, 2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jButton3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLines)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(40, 40, 40))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void interface1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_interface1MouseClicked
-        point = new Point(evt.getX(), evt.getY());
+        point = new Point(evt.getX(), evt.getY(),this.points.size());
+        System.out.println(evt.getX()+" "+ evt.getY()+"");
         if (painting == true) {
-            points.add(new Point(evt.getX(), evt.getY()));
+            points.add(point);
             interface1.SetPoints(points);
             this.repaint();
         } else if (PointSelection(point)) {
@@ -226,6 +263,18 @@ public class Main extends javax.swing.JFrame {
         painting = false;
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btnLinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinesActionPerformed
+        Lines = c.getListoflines();
+        graph.setLines(Lines);
+        graph.setActualpoints(points);
+        intersectionpoints = graph.intersectionnodes(this.getHeight(), this.getWidth());
+        graph.road();
+        
+        //interface1.SetIntPoints(intersectionpoints);
+        interface1.SetGraph(graph.Prim(graph.ToSquare()));
+        this.repaint();
+    }//GEN-LAST:event_btnLinesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -262,6 +311,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLines;
     private javax.swing.JButton btncolors;
     private javax.swing.JButton btndivide;
     private View.Interface interface1;

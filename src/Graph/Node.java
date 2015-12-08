@@ -5,13 +5,12 @@ import java.util.LinkedList;
 
 public class Node {
 
-    private LinkedList<Edge> Aristas;
-    private Point nodo;
+    private LinkedList<Edge> Edges;
+    private Point node;
 
-    public Node(Point nodo) {
-        Aristas = new LinkedList<Edge>();
-        this.Aristas = Aristas;
-        this.nodo = nodo;
+    public Node(Point node) {
+        Edges = new LinkedList<Edge>();
+        this.node = node;
     }
 
     public Node() {
@@ -19,30 +18,32 @@ public class Node {
     }
 
     /**
-     * @return the Aristas
+     * @return the Edges
      */
-    public LinkedList<Edge> getAristas() {
-        return Aristas;
+    public LinkedList<Edge> getEdges() {
+        return Edges;
     }
 
     /**
-     * @param Aristas the Aristas to set
+     * @param Edges the Edges to set
      */
-    public void setAristas(LinkedList<Edge> Aristas) {
-        this.Aristas = Aristas;
+    public void setEdges(LinkedList<Edge> Edges) {
+        this.Edges = Edges;
     }
 
     /**
-     * @return the nodo
+     * @return the node
      */
-    public Point getNodo() {
-        return nodo;
+    public Point getNode() {
+        return node;
     }
 
     /**
-     * @param nodo the nodo to set
+     * @param node the node to set
      */
-    public void setNodo(Point nodo) {
-        this.nodo = nodo;
+    public void setNode(Point node) {
+        this.node = node;
     }
+
+   
 }
